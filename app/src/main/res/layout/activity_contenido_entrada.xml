@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_linear_contenido_entrada">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo_entrada"
+            android:textSize="@dimen/text_size_titulo_entrada"
+            android:id="@+id/txtTituloEntrada" />
+
+        <!--Linea separadora -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/autor_fecha_entrada"
+            android:textSize="@dimen/text_size_autor_fecha_entrada"
+            android:layout_marginBottom="@dimen/margin_bottom_autor_fecha_entrada"
+            android:id="@+id/txtAutorFechaEntrada" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/contenido_entrada"
+            android:id="@+id/txtContenido" />
+
+    </LinearLayout>
+
+</ScrollView>

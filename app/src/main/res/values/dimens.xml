@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Dimensiones pantalla principal (listado de entradas) -->
+    <dimen name="text_size_titulo_entrada_listado">20dp</dimen>
+    <dimen name="padding_linear_elemento_listado">20dp</dimen>
+    <dimen name="padding_item_spinner">5dp</dimen>
+    <dimen name="padding_bottom_item_spinner">10dp</dimen>
+    <dimen name="text_size_item_spinner">18dp</dimen>
+    <dimen name="text_size_fecha_entrada_listado">12dp</dimen>
+    <dimen name="text_size_autor_entrada_listado">16dp</dimen>
+
+    <!-- Dimensiones pantalla de contenido de entrada -->
+    <dimen name="text_size_titulo_entrada">25dp</dimen>
+    <dimen name="text_size_autor_fecha_entrada">20dp</dimen>
+    <dimen name="padding_linear_contenido_entrada">16dp</dimen>
+    <dimen name="margin_bottom_autor_fecha_entrada">25dp</dimen>
+
+    <!-- Dimensiones pantalla de publicacion de entrada -->
+    <dimen name="text_size_titulo_entrada_publicacion">20dp</dimen>
+    <dimen name="text_size_autor_entrada_publicacion">20dp</dimen>
+    <dimen name="text_size_contenido_entrada_publicacion">20dp</dimen>
+    <dimen name="padding_linear_publicacion_entrada">16dp</dimen>
+
+
+
+
+</resources>

@@ -19,6 +19,13 @@ public class Entrada {
         this.contenido = contenido;
     }
 
+    public Entrada(String titulo, String autor, String fecha, String contenido) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.fecha = fecha;
+        this.contenido = contenido;
+    }
+
     public String getTitulo() {
         return titulo;
     }

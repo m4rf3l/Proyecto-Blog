@@ -1,52 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/padding_linear_publicacion_entrada">
+<ScrollView
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:id="@+id/scrollView2" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/titulo_entrada_publicacion"
-        android:textSize="@dimen/text_size_titulo_entrada_publicacion"
-        android:id="@+id/txtTituloEntradaPublicacion" />
-
-    <EditText
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_titulo_entrada"
-        android:id="@+id/edtTitulo" />
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_linear_publicacion_entrada">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/autor_entrada_publicacion"
-        android:textSize="@dimen/text_size_autor_entrada_publicacion"
-        android:id="@+id/txtAutorEntradaPublicacion" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo_entrada_publicacion"
+            android:textSize="@dimen/text_size_titulo_entrada_publicacion"
+            android:textColor="@color/gray_600"
+            android:id="@+id/txtTituloEntradaPublicacion" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/hint_autor_entrada"
-        android:id="@+id/edtAutor" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_titulo_entrada"
+            android:paddingBottom="@dimen/padding_vertical_edittext_publicacion"
+            android:textSize="@dimen/text_size_edittext_publicacion"
+            android:textColorHint="@color/gray_500"
+            android:theme="@style/TemaEditText"
+            android:id="@+id/edtTitulo" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/contenido_entrada_publicacion"
-        android:textSize="@dimen/text_size_contenido_entrada_publicacion"
-        android:id="@+id/txtContenidoEntradaPublicacion" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/autor_entrada_publicacion"
+            android:layout_marginTop="@dimen/margin_top_labels_publicacion"
+            android:textSize="@dimen/text_size_autor_entrada_publicacion"
+            android:textColor="@color/gray_600"
+            android:id="@+id/txtAutorEntradaPublicacion" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:lines="10"
-        android:gravity="top"
-        android:hint="@string/hint_contenido_entrada"
-        android:id="@+id/edtContenido" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="@string/hint_autor_entrada"
+            android:paddingBottom="@dimen/padding_vertical_edittext_publicacion"
+            android:textSize="@dimen/text_size_edittext_publicacion"
+            android:textColorHint="@color/gray_500"
+            android:theme="@style/TemaEditText"
+            android:id="@+id/edtAutor" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/contenido_entrada_publicacion"
+            android:textSize="@dimen/text_size_contenido_entrada_publicacion"
+            android:layout_marginTop="@dimen/margin_top_labels_publicacion"
+            android:textColor="@color/gray_600"
+            android:id="@+id/txtContenidoEntradaPublicacion" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:lines="10"
+            android:gravity="top"
+            android:hint="@string/hint_contenido_entrada"
+            android:paddingBottom="@dimen/padding_vertical_edittext_publicacion"
+            android:textSize="@dimen/text_size_edittext_publicacion"
+            android:textColorHint="@color/gray_500"
+            android:theme="@style/TemaEditText"
+            android:id="@+id/edtContenido" />
+
+    </LinearLayout>
+
+</ScrollView>
+

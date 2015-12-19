@@ -5,25 +5,36 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Dimensiones pantalla principal (listado de entradas) -->
-    <dimen name="text_size_titulo_entrada_listado">20dp</dimen>
-    <dimen name="padding_linear_elemento_listado">20dp</dimen>
-    <dimen name="padding_item_spinner">5dp</dimen>
+    <dimen name="text_size_titulo_entrada_listado">18dp</dimen>
+    <dimen name="padding_linear_horizontal_elemento_listado">16dp</dimen>
+    <dimen name="padding_linear_vertical_elemento_listado">8dp</dimen>
+    <dimen name="padding_item_spinner">10dp</dimen>
     <dimen name="padding_bottom_item_spinner">10dp</dimen>
-    <dimen name="text_size_item_spinner">18dp</dimen>
+    <dimen name="text_size_item_spinner">16dp</dimen>
     <dimen name="text_size_fecha_entrada_listado">12dp</dimen>
     <dimen name="text_size_autor_entrada_listado">16dp</dimen>
+    <dimen name="margin_fab">16dp</dimen>
+    <dimen name="elevation_fav">12dp</dimen>
+    <dimen name="margin_left_fecha">20dp</dimen>
 
     <!-- Dimensiones pantalla de contenido de entrada -->
-    <dimen name="text_size_titulo_entrada">25dp</dimen>
-    <dimen name="text_size_autor_fecha_entrada">20dp</dimen>
+    <dimen name="text_size_titulo_entrada">20dp</dimen>
+    <dimen name="text_size_autor_entrada">18dp</dimen>
+    <dimen name="text_size_fecha_entrada">14dp</dimen>
     <dimen name="padding_linear_contenido_entrada">16dp</dimen>
-    <dimen name="margin_bottom_autor_fecha_entrada">25dp</dimen>
+    <dimen name="margin_bottom_fecha_entrada">12dp</dimen>
+    <dimen name="padding_headers">12dp</dimen>
+    <dimen name="text_size_contenido">16dp</dimen>
 
     <!-- Dimensiones pantalla de publicacion de entrada -->
-    <dimen name="text_size_titulo_entrada_publicacion">20dp</dimen>
-    <dimen name="text_size_autor_entrada_publicacion">20dp</dimen>
-    <dimen name="text_size_contenido_entrada_publicacion">20dp</dimen>
+    <dimen name="text_size_titulo_entrada_publicacion">16dp</dimen>
+    <dimen name="text_size_autor_entrada_publicacion">16dp</dimen>
+    <dimen name="text_size_contenido_entrada_publicacion">16dp</dimen>
     <dimen name="padding_linear_publicacion_entrada">16dp</dimen>
+    <dimen name="padding_vertical_edittext_publicacion">16dp</dimen>
+    <dimen name="margin_top_labels_publicacion">12dp</dimen>
+    <dimen name="text_size_edittext_publicacion">16dp</dimen>
+
 
 
 

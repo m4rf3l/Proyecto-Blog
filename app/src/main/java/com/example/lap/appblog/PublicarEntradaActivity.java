@@ -1,13 +1,16 @@
 package com.example.lap.appblog;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.Calendar;
 
 /**
  * Created by Lap on 17/12/2015.
@@ -17,6 +20,7 @@ public class PublicarEntradaActivity extends AppCompatActivity {
     protected EditText edtTitulo;
     protected EditText edtAutor;
     protected EditText edtContenido;
+    protected ProgressDialog dialogoCarga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,15 @@ public class PublicarEntradaActivity extends AppCompatActivity {
                 break;
             case R.id.btnPublicar:
                 if(validarCajas()) {
-                    Toast.makeText(this, "CAMPOS COMPLETOS", Toast.LENGTH_SHORT).show();
+                    String titulo = edtTitulo.getText().toString();
+                    String autor = edtAutor.getText().toString();
+                    String contenido = edtContenido.getText().toString();
+                    Calendar calendario = Calendar.getInstance();
+                    String fecha = calendario.getTime().toString();
+                    Entrada entrada = new Entrada(titulo, autor, fecha, contenido);
+                    PublicacionEntrada publicacion = new PublicacionEntrada(entrada);
+                    dialogoCarga = ProgressDialog.show(this, "", "Publicando entrada.", false);
+                    publicacion.hacerPeticion();
                 }
                 break;
         }
@@ -72,5 +84,58 @@ public class PublicarEntradaActivity extends AppCompatActivity {
             camposCompletos = false;
         }
         return camposCompletos;
+    }
+
+    private class PublicacionEntrada implements OnPostExecute {
+
+        Entrada entrada;
+
+        public PublicacionEntrada(Entrada entrada) {
+            this.entrada = entrada;
+        }
+
+        private void hacerPeticion(){
+            guardarEntrada();
+        }
+
+        private void guardarEntrada() {
+            Peticiones peticion =  new Peticiones(PublicarEntradaActivity.this);
+            JSONObject datos = new JSONObject();
+            try {
+                datos.put("titulo", entrada.getTitulo());
+                datos.put("autor", entrada.getAutor());
+                datos.put("fecha", entrada.getFecha());
+                datos.put("contenido", entrada.getContenido());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            peticion.postEntrada(datos, this);
+        }
+
+        private void procesarResultadoGuardarEntrada(String respuesta, int codigo) {
+
+            JSONObject respJSON = null;
+
+            if(respuesta != null) {
+                    try {
+                        respJSON = new JSONObject(respuesta);
+                        if (respJSON.length() != 0) {
+
+                            Toast.makeText(PublicarEntradaActivity.this, "LLEGÓ", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                dialogoCarga.dismiss();
+            } else {
+                dialogoCarga.dismiss();
+                Toast.makeText(PublicarEntradaActivity.this, "Error al publicar entrada.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onTaskCompleted(String respuesta, int codigo) {
+            procesarResultadoGuardarEntrada(respuesta, codigo);
+        }
     }
 }

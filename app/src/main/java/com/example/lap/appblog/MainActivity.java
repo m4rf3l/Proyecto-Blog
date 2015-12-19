@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         ArrayList <String> listaFiltros =  new ArrayList <String> ();
+        listaFiltros.add("FILTROS");
         listaFiltros.add("Título");
         listaFiltros.add("Contenido");
         listaFiltros.add("Autor");
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void llenarListaConDatosDummies() {
         for(int i=0;i<20;i++) {
-            listaEntradas.add(new Entrada((i+1),"Titulo de entrada "+(i+1),"Autor "+(i+1), "17-12-2015", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in risus velit. Sed placerat viverra mi, vitae gravida sapien pretium in. Aliquam feugiat consequat rutrum. Mauris accumsan non tortor imperdiet euismod. Etiam rhoncus cursus lorem, vitae ultricies felis eleifend vitae. Etiam id diam eget lacus finibus fermentum non vel eros. Morbi rhoncus eget nunc nec laoreet. Pellentesque sed ligula convallis arcu dictum tincidunt. Cras hendrerit et tortor vel congue. "+(i+1)));
+            listaEntradas.add(new Entrada((i+1),"Este es el título de la entrada "+(i+1),"Autor "+(i+1), "17-12-2015", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in risus velit. Sed placerat viverra mi, vitae gravida sapien pretium in. Aliquam feugiat consequat rutrum. Mauris accumsan non tortor imperdiet euismod. Etiam rhoncus cursus lorem, vitae ultricies felis eleifend vitae. Etiam id diam eget lacus finibus fermentum non vel eros. Morbi rhoncus eget nunc nec laoreet. Pellentesque sed ligula convallis arcu dictum tincidunt. Cras hendrerit et tortor vel congue. "+(i+1)));
         }
     }
 }

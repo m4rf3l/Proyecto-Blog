@@ -15,7 +15,8 @@
     <!--String para la pantalla de contenido de entrada -->
     <string name="titulo_action_bar_contenido">Entrada</string>
     <string name="titulo_entrada">Título de la entrada</string>
-    <string name="autor_fecha_entrada">Autor - Fecha</string>
+    <string name="autor_entrada">Autor</string>
+    <string name="fecha_entrada">Fecha</string>
     <string name="contenido_entrada">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus feugiat, lorem in rhoncus imperdiet, arcu ligula venenatis erat, vitae mollis nisl nunc a purus. Maecenas non risus sed velit vestibulum hendrerit convallis sit amet libero. Proin efficitur mauris eget sem consequat, nec euismod elit tincidunt. Aenean vitae bibendum lorem. Praesent ornare porttitor sapien at accumsan. Donec sit amet efficitur nisl, vitae ultrices mauris. Aliquam erat volutpat. Aliquam ut molestie nibh, vitae mattis lectus. Nulla molestie sapien in commodo convallis. Donec porta venenatis quam ac efficitur. Mauris pulvinar luctus sapien. Aliquam pretium vehicula enim, sit amet egestas nibh. Donec nisl ex, vestibulum sed sagittis sed, placerat non ante.
 
 Nulla ultricies, risus a varius rutrum, mi tortor sagittis lacus, vitae luctus turpis tellus ut turpis. Morbi sit amet ipsum vel elit efficitur aliquet. Ut convallis nunc a lacus accumsan finibus. Donec vulputate, sem non ultricies laoreet, lacus sapien molestie felis, ac mattis tortor felis non augue. Ut non varius justo. Etiam et ex nunc. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque porta molestie ligula vel placerat. Pellentesque vitae mi quis erat ultrices auctor vel posuere est. Sed vel tristique tellus.</string>
@@ -23,9 +24,9 @@ Nulla ultricies, risus a varius rutrum, mi tortor sagittis lacus, vitae luctus t
 
     <!--String para la pantalla de publicacion de entrada -->
     <string name="titulo_action_bar_publicacion">Nueva entrada</string>
-    <string name="titulo_entrada_publicacion"><b>Título:</b></string>
-    <string name="autor_entrada_publicacion"><b>Autor:</b></string>
-    <string name="contenido_entrada_publicacion"><b>Contenido:</b></string>
+    <string name="titulo_entrada_publicacion">Título</string>
+    <string name="autor_entrada_publicacion">Autor</string>
+    <string name="contenido_entrada_publicacion">Contenido</string>
     <string name="hint_titulo_entrada">Proporcione el título de la entrada</string>
     <string name="hint_autor_entrada">Proporcione el nombre del autor</string>
     <string name="hint_contenido_entrada">Redacte el contenido de la entrada</string>

@@ -4,7 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_linear_elemento_listado"
+    android:paddingLeft="@dimen/padding_linear_horizontal_elemento_listado"
+    android:paddingRight="@dimen/padding_linear_horizontal_elemento_listado"
+    android:paddingTop="@dimen/padding_linear_vertical_elemento_listado"
+    android:paddingBottom="@dimen/padding_linear_vertical_elemento_listado"
     android:id="@+id/linearElementoListaEntradas">
 
     <LinearLayout
@@ -15,16 +18,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/titulo_entrada_listado"
+            android:textColor="@color/gray_900"
             android:textSize="@dimen/text_size_titulo_entrada_listado"
             android:id="@+id/txtTituloEntradaListado"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_fecha"
+            android:layout_weight="0"
             android:text="@string/fecha_entrada_listado"
             android:gravity="right"
             android:layout_gravity="center_vertical"
+            android:textColor="@color/gray_500"
             android:textSize="@dimen/text_size_fecha_entrada_listado"
             android:id="@+id/txtFechaEntradaListado"/>
 
@@ -34,12 +42,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/autor_entrada_listado"
+        android:textColor="@color/gray_800"
         android:textSize="@dimen/text_size_autor_entrada_listado"
         android:id="@+id/txtAutorEntradaListado"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/gray_500"
         android:text="Contenido de entrada"
         android:id="@+id/txtContenidoEntradaListado"/>
 

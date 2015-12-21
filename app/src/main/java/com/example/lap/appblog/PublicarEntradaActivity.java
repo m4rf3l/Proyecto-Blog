@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -32,7 +33,6 @@ public class PublicarEntradaActivity extends AppCompatActivity {
         edtContenido = (EditText) findViewById(R.id.edtContenido);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     @Override
@@ -59,10 +59,11 @@ public class PublicarEntradaActivity extends AppCompatActivity {
                     String autor = edtAutor.getText().toString();
                     String contenido = edtContenido.getText().toString();
                     Calendar calendario = Calendar.getInstance();
-                    String fecha = calendario.getTime().toString();
+                    SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd"); //Formato MySQL
+                    String fecha = fechaFormato.format(calendario.getTime());
                     Entrada entrada = new Entrada(titulo, autor, fecha, contenido);
                     PublicacionEntrada publicacion = new PublicacionEntrada(entrada);
-                    dialogoCarga = ProgressDialog.show(this, "", "Publicando entrada.", false);
+                    dialogoCarga = ProgressDialog.show(this, getResources().getString(R.string.titulo_dialog_publicando_entrada), getResources().getString(R.string.contenido_dialog_publicando_entrada), false);
                     publicacion.hacerPeticion();
                 }
                 break;
@@ -84,6 +85,12 @@ public class PublicarEntradaActivity extends AppCompatActivity {
             camposCompletos = false;
         }
         return camposCompletos;
+    }
+
+    public void limpiarCajas() {
+        edtTitulo.setText("");
+        edtAutor.setText("");
+        edtContenido.setText("");
     }
 
     private class PublicacionEntrada implements OnPostExecute {
@@ -112,30 +119,32 @@ public class PublicarEntradaActivity extends AppCompatActivity {
             peticion.postEntrada(datos, this);
         }
 
-        private void procesarResultadoGuardarEntrada(String respuesta, int codigo) {
-
-            JSONObject respJSON = null;
-
+        private void procesarResultadoGuardarEntrada(String respuesta) {
+            JSONObject respuestaJSON = null;
             if(respuesta != null) {
                     try {
-                        respJSON = new JSONObject(respuesta);
-                        if (respJSON.length() != 0) {
-
-                            Toast.makeText(PublicarEntradaActivity.this, "LLEGÓ", Toast.LENGTH_SHORT).show();
+                        respuestaJSON = new JSONObject(respuesta);
+                        if (respuestaJSON.length() != 0) {
+                            String mensaje = respuestaJSON.getString("msg");
+                            Toast.makeText(PublicarEntradaActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+                            limpiarCajas();
+                        } else {
+                            Toast.makeText(PublicarEntradaActivity.this, PublicarEntradaActivity.this.getResources().getString(R.string.aviso_error_publicar_entrada), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(PublicarEntradaActivity.this, PublicarEntradaActivity.this.getResources().getString(R.string.aviso_error_publicar_entrada), Toast.LENGTH_SHORT).show();
                     }
                 dialogoCarga.dismiss();
             } else {
                 dialogoCarga.dismiss();
-                Toast.makeText(PublicarEntradaActivity.this, "Error al publicar entrada.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PublicarEntradaActivity.this, PublicarEntradaActivity.this.getResources().getString(R.string.aviso_error_publicar_entrada), Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
-        public void onTaskCompleted(String respuesta, int codigo) {
-            procesarResultadoGuardarEntrada(respuesta, codigo);
+        public void onTaskCompleted(String respuesta) {
+            procesarResultadoGuardarEntrada(respuesta);
         }
     }
 }

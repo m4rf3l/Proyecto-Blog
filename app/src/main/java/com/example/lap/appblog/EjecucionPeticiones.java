@@ -21,7 +21,6 @@ public class EjecucionPeticiones extends AsyncTask <Integer, Integer, String> {
     protected JSONObject datos; // Si se requieren enviar datos en la peticion
     protected Context contexto;
     protected Conexion con;     // Para verificar la conexión del dispositivo
-    protected int codigo;
 
     // Constantes para identificar metodos
     static final int GET = 0;
@@ -62,7 +61,6 @@ public class EjecucionPeticiones extends AsyncTask <Integer, Integer, String> {
                             respuesta = response.toString();
                         } else {
                             respuesta = conexion.getResponseMessage();
-                            codigo = conexion.getResponseCode();
                         }
                         conexion.disconnect();
                     } catch (Exception e) {
@@ -88,9 +86,6 @@ public class EjecucionPeticiones extends AsyncTask <Integer, Integer, String> {
                             }
                             br.close();
                             respuesta = response.toString();
-                        } else {
-                            respuesta = conexion.getResponseMessage();
-                            codigo = conexion.getResponseCode();
                         }
                         conexion.disconnect();
                     } catch (Exception e) {
@@ -103,7 +98,7 @@ public class EjecucionPeticiones extends AsyncTask <Integer, Integer, String> {
     }
 
     @Override
-    protected void onPostExecute(String resultado) {
-        listener.onTaskCompleted(resultado, codigo);
+    protected void onPostExecute(String respuesta) {
+        listener.onTaskCompleted(respuesta);
     }
 }

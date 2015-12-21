@@ -6,12 +6,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * Created by Lap on 17/12/2015.
  */
 public class ContenidoEntradaActivity extends AppCompatActivity {
+
+    protected TextView txtTituloEntrada;
+    protected TextView txtAutorEntrada;
+    protected TextView txtFechaEntrada;
+    protected TextView txtContenidoEntrada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +26,20 @@ public class ContenidoEntradaActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        txtTituloEntrada = (TextView) findViewById(R.id.txtTituloEntrada);
+        txtAutorEntrada = (TextView) findViewById(R.id.txtAutorEntrada);
+        txtFechaEntrada = (TextView) findViewById(R.id.txtFechaEntrada);
+        txtContenidoEntrada = (TextView) findViewById(R.id.txtContenidoEntrada);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            txtTituloEntrada.setText(extras.getString("titulo"));
+            txtAutorEntrada.setText(extras.getString("autor"));
+            txtFechaEntrada.setText(extras.getString("fecha"));
+            txtContenidoEntrada.setText(extras.getString("contenido"));
+        } else {
+            Toast.makeText(this, "Error al mostrar el contenido de la entrada.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

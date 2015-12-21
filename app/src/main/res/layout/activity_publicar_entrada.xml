@@ -25,6 +25,7 @@
             android:hint="@string/hint_titulo_entrada"
             android:paddingBottom="@dimen/padding_vertical_edittext_publicacion"
             android:textSize="@dimen/text_size_edittext_publicacion"
+            android:maxLength="60"
             android:textColorHint="@color/gray_500"
             android:theme="@style/TemaEditText"
             android:id="@+id/edtTitulo" />
@@ -45,6 +46,7 @@
             android:hint="@string/hint_autor_entrada"
             android:paddingBottom="@dimen/padding_vertical_edittext_publicacion"
             android:textSize="@dimen/text_size_edittext_publicacion"
+            android:maxLength="30"
             android:textColorHint="@color/gray_500"
             android:theme="@style/TemaEditText"
             android:id="@+id/edtAutor" />
@@ -67,6 +69,7 @@
             android:hint="@string/hint_contenido_entrada"
             android:paddingBottom="@dimen/padding_vertical_edittext_publicacion"
             android:textSize="@dimen/text_size_edittext_publicacion"
+            android:maxLength="500"
             android:textColorHint="@color/gray_500"
             android:theme="@style/TemaEditText"
             android:id="@+id/edtContenido" />

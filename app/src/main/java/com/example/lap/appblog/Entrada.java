@@ -5,13 +5,13 @@ package com.example.lap.appblog;
  */
 public class Entrada {
 
-    protected int id;
+    protected String id;
     protected String titulo;
     protected String autor;
     protected String fecha;
     protected String contenido;
 
-    public Entrada(int id, String titulo, String autor, String fecha, String contenido) {
+    public Entrada(String id, String titulo, String autor, String fecha, String contenido) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;

@@ -5,7 +5,8 @@ import org.json.JSONObject;
 
 public class Peticiones {
 
-    protected String URLEntradas;
+    protected String URLGuardarEntrada;
+    protected String URLObtenerEntradas;
     protected EjecucionPeticiones peticion;
     protected Context contexto;
 
@@ -17,9 +18,15 @@ public class Peticiones {
         this.contexto = contexto;
     }
 
+    public void getEntradas(OnPostExecute listener){
+        URLObtenerEntradas = "http://10.0.3.2:7777/blog/metodos/obtenerEntradas.php";
+        peticion = new EjecucionPeticiones(GET, URLObtenerEntradas, listener, contexto);
+        peticion.execute();
+    }
+
     public void postEntrada(JSONObject datos, OnPostExecute listener){
-        URLEntradas = "http://10.0.3.2:7777/blog/metodos/guardarEntrada.php";
-        peticion = new EjecucionPeticiones(POST, URLEntradas, listener, contexto);
+        URLGuardarEntrada = "http://10.0.3.2:7777/blog/metodos/guardarEntrada.php";
+        peticion = new EjecucionPeticiones(POST, URLGuardarEntrada, listener, contexto);
         peticion.setDatos(datos);
         peticion.execute();
     }

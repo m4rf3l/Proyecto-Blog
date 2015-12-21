@@ -11,6 +11,8 @@
     <string name="autor_entrada_listado">Autor</string>
     <string name="titulo_action_bar">Principal</string>
     <string name="hint_view_busquedas">Buscar entradas...</string>
+    <string name="aviso_error_cargar_entradas">Error al cargar las entradas.</string>
+    <string name="aviso_problema_conexion_fab">Problema en la conexión, no es posible publicar entradas.</string>
 
     <!--String para la pantalla de contenido de entrada -->
     <string name="titulo_action_bar_contenido">Entrada</string>
@@ -21,17 +23,20 @@
 
 Nulla ultricies, risus a varius rutrum, mi tortor sagittis lacus, vitae luctus turpis tellus ut turpis. Morbi sit amet ipsum vel elit efficitur aliquet. Ut convallis nunc a lacus accumsan finibus. Donec vulputate, sem non ultricies laoreet, lacus sapien molestie felis, ac mattis tortor felis non augue. Ut non varius justo. Etiam et ex nunc. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque porta molestie ligula vel placerat. Pellentesque vitae mi quis erat ultrices auctor vel posuere est. Sed vel tristique tellus.</string>
 
-
     <!--String para la pantalla de publicacion de entrada -->
     <string name="titulo_action_bar_publicacion">Nueva entrada</string>
     <string name="titulo_entrada_publicacion">Título</string>
     <string name="autor_entrada_publicacion">Autor</string>
     <string name="contenido_entrada_publicacion">Contenido</string>
-    <string name="hint_titulo_entrada">Proporcione el título de la entrada</string>
-    <string name="hint_autor_entrada">Proporcione el nombre del autor</string>
-    <string name="hint_contenido_entrada">Redacte el contenido de la entrada</string>
+    <string name="hint_titulo_entrada">Proporcione el título de la entrada.</string>
+    <string name="hint_autor_entrada">Proporcione el nombre del autor.</string>
+    <string name="hint_contenido_entrada">Redacte el contenido de la entrada.</string>
     <string name="aviso_titulo_vacio">Proporcione el título de la entrada.</string>
     <string name="aviso_autor_vacio">Proporcione el nombre del autor.</string>
     <string name="aviso_contenido_vacio">Redacte el contenido de la entrada.</string>
+    <string name="aviso_error_publicar_entrada">Error al publicar entrada.</string>
+    <string name="titulo_dialog_publicando_entrada">Publicando entrada</string>
+    <string name="contenido_dialog_publicando_entrada">Por favor espere...</string>
+    <string name="aviso_contenido_titulo_excedido">El título de la entrada no debe ser mayor a 60 caracteres.</string>
 
 </resources>

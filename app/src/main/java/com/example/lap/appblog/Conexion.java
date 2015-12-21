@@ -8,7 +8,7 @@ public class Conexion {
 
     protected Context contexto;
 
-    public Conexion(Context contexto){
+    public Conexion(Context contexto) {
         this.contexto = contexto;
     }
 

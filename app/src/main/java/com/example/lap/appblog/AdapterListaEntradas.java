@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Lap on 17/12/2015.
@@ -43,8 +46,9 @@ class AdapterListaEntradas extends ArrayAdapter<Entrada> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         // Get the data item for this position
-        Entrada ent = getItem(position);
+        Entrada entrada = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.elemento_lista_entradas, parent, false);
@@ -55,10 +59,25 @@ class AdapterListaEntradas extends ArrayAdapter<Entrada> {
         TextView txtFecha = (TextView) convertView.findViewById(R.id.txtFechaEntradaListado);
         TextView txtContenido = (TextView) convertView.findViewById(R.id.txtContenidoEntradaListado);
 
-        txtTitulo.setText(ent.getTitulo());
-        txtAutor.setText(ent.getAutor());
-        txtFecha.setText(ent.getFecha());
-        txtContenido.setText(ent.getContenido());
+        txtTitulo.setText(entrada.getTitulo());
+        txtAutor.setText(entrada.getAutor());
+
+        SimpleDateFormat fechaFormatoSQL = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat fechaFormatoApp = new SimpleDateFormat("dd-MM-yyyy");
+
+        Date fecha = null;
+        try {
+            fecha = fechaFormatoSQL.parse(entrada.getFecha());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        txtFecha.setText(fechaFormatoApp.format(fecha));
+
+        if(entrada.getContenido().length() > 70) {
+            txtContenido.setText(entrada.getContenido().substring(0, 71) + "...");
+        } else {
+            txtContenido.setText(entrada.getContenido());
+        }
 
         // Return the completed view to render on screen
         return convertView;

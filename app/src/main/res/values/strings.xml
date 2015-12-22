@@ -12,7 +12,14 @@
     <string name="titulo_action_bar">Principal</string>
     <string name="hint_view_busquedas">Buscar entradas...</string>
     <string name="aviso_error_cargar_entradas">Error al cargar las entradas.</string>
+    <string name="aviso_no_entradas">No hay entradas que mostrar.</string>
+    <string name="mensaje_no_entradas_listview">NO HAY ENTRADAS QUE MOSTRAR.</string>
     <string name="aviso_problema_conexion_fab">Problema en la conexión, no es posible publicar entradas.</string>
+    <string name="contenido_dialog_cargando_entradas">Cargando entradas, por favor espere...</string>
+    <string name="filtro_item_spinner">FILTROS</string>
+    <string name="titulo_item_spinner">Título</string>
+    <string name="contenido_item_spinner">Contenido</string>
+    <string name="autor_item_spinner">Autor</string>
 
     <!--String para la pantalla de contenido de entrada -->
     <string name="titulo_action_bar_contenido">Entrada</string>
@@ -35,8 +42,7 @@ Nulla ultricies, risus a varius rutrum, mi tortor sagittis lacus, vitae luctus t
     <string name="aviso_autor_vacio">Proporcione el nombre del autor.</string>
     <string name="aviso_contenido_vacio">Redacte el contenido de la entrada.</string>
     <string name="aviso_error_publicar_entrada">Error al publicar entrada.</string>
-    <string name="titulo_dialog_publicando_entrada">Publicando entrada</string>
-    <string name="contenido_dialog_publicando_entrada">Por favor espere...</string>
+    <string name="contenido_dialog_publicando_entrada">Publicando entrada, por favor espere...</string>
     <string name="aviso_contenido_titulo_excedido">El título de la entrada no debe ser mayor a 60 caracteres.</string>
 
 </resources>

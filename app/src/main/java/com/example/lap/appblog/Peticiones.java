@@ -19,13 +19,13 @@ public class Peticiones {
     }
 
     public void getEntradas(OnPostExecute listener){
-        URLObtenerEntradas = "http://10.0.3.2:7777/blog/metodos/obtenerEntradas.php";
+        URLObtenerEntradas = "http://app-blog.hol.es/blog/metodos/obtenerEntradas.php";
         peticion = new EjecucionPeticiones(GET, URLObtenerEntradas, listener, contexto);
         peticion.execute();
     }
 
     public void postEntrada(JSONObject datos, OnPostExecute listener){
-        URLGuardarEntrada = "http://10.0.3.2:7777/blog/metodos/guardarEntrada.php";
+        URLGuardarEntrada = "http://app-blog.hol.es/blog/metodos/guardarEntrada.php";
         peticion = new EjecucionPeticiones(POST, URLGuardarEntrada, listener, contexto);
         peticion.setDatos(datos);
         peticion.execute();

@@ -1,6 +1,7 @@
 package com.example.lap.appblog;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +15,22 @@ import java.util.Date;
 /**
  * Created by Lap on 17/12/2015.
  */
-class AdapterListaEntradas extends ArrayAdapter<Entrada> {
+public class AdapterListaEntradas extends ArrayAdapter <Entrada> {
 
     protected Context context;
     protected ArrayList <Entrada> listaEntradas;
+    protected ArrayList <Entrada> listaEntradasAux; // Para los filtros
+    static final int FILTRO_GENERAL = 0;
+    static final int FILTRO_TITULO = 1;
+    static final int FILTRO_CONTENIDO = 2;
+    static final int FILTRO_AUTOR = 3;
 
     public AdapterListaEntradas (Context context, ArrayList <Entrada> listaEntradas) {
         // TODO Auto-generated constructor stub
         super(context, 0, new ArrayList<Entrada>());
         this.listaEntradas = listaEntradas;
         this.context = context;
+        listaEntradasAux = new ArrayList <Entrada> ();
     }
 
     @Override
@@ -53,6 +60,7 @@ class AdapterListaEntradas extends ArrayAdapter<Entrada> {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.elemento_lista_entradas, parent, false);
         }
+
         // Lookup view for data population
         TextView txtTitulo = (TextView) convertView.findViewById(R.id.txtTituloEntradaListado);
         TextView txtAutor= (TextView) convertView.findViewById(R.id.txtAutorEntradaListado);
@@ -81,5 +89,47 @@ class AdapterListaEntradas extends ArrayAdapter<Entrada> {
 
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    public void filtroBusqueda(String cadena, int seleccionFiltro) {
+        cadena = cadena.toLowerCase();
+        listaEntradas.clear();
+        if (cadena.length() == 0) {
+            listaEntradas.addAll(listaEntradasAux);
+        } else {
+            switch(seleccionFiltro) {
+                case FILTRO_GENERAL:
+                    for (Entrada ent : listaEntradasAux) {
+                        if (ent.getTitulo().toLowerCase().contains(cadena)
+                            || ent.getAutor().toLowerCase().contains(cadena)
+                            || ent.getContenido().toLowerCase().contains(cadena)) {
+                            listaEntradas.add(ent);
+                        }
+                    }
+                    break;
+                case FILTRO_TITULO:
+                    for (Entrada ent : listaEntradasAux) {
+                        if (ent.getTitulo().toLowerCase().contains(cadena)) {
+                            listaEntradas.add(ent);
+                        }
+                    }
+                    break;
+                case FILTRO_AUTOR:
+                    for (Entrada ent : listaEntradasAux) {
+                        if (ent.getAutor().toLowerCase().contains(cadena)) {
+                            listaEntradas.add(ent);
+                        }
+                    }
+                    break;
+                case FILTRO_CONTENIDO:
+                    for (Entrada ent : listaEntradasAux) {
+                        if (ent.getContenido().toLowerCase().contains(cadena)) {
+                            listaEntradas.add(ent);
+                        }
+                    }
+                    break;
+            }
+        }
+        notifyDataSetChanged();
     }
 }

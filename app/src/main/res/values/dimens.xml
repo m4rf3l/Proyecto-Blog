@@ -18,6 +18,7 @@
     <dimen name="margin_left_fecha">20dp</dimen>
     <dimen name="width_progress_bar">40dp</dimen>
     <dimen name="height_progress_bar">40dp</dimen>
+    <dimen name="text_size_mensaje_no_entradas_listview">20dp</dimen>
 
     <!-- Dimensiones pantalla de contenido de entrada -->
     <dimen name="text_size_titulo_entrada">20dp</dimen>

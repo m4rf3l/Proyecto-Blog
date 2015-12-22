@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -63,7 +64,7 @@ public class PublicarEntradaActivity extends AppCompatActivity {
                     String fecha = fechaFormato.format(calendario.getTime());
                     Entrada entrada = new Entrada(titulo, autor, fecha, contenido);
                     PublicacionEntrada publicacion = new PublicacionEntrada(entrada);
-                    dialogoCarga = ProgressDialog.show(this, getResources().getString(R.string.titulo_dialog_publicando_entrada), getResources().getString(R.string.contenido_dialog_publicando_entrada), false);
+                    dialogoCarga = ProgressDialog.show(this, "", getResources().getString(R.string.contenido_dialog_publicando_entrada), false);
                     publicacion.hacerPeticion();
                 }
                 break;

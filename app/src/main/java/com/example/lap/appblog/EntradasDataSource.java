@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.widget.Adapter;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -49,38 +46,6 @@ public class EntradasDataSource {
         database = openHelper.getWritableDatabase();
     }
 
-    /*
-    public void guardarEntrada(String titulo, String autor, String fecha, String contenido) {
-        //Nuestro contenedor de valores
-        ContentValues values = new ContentValues();
-        values.put(ColumnasEntrada.TITULO_ENTRADA, titulo);
-        values.put(ColumnasEntrada.AUTOR_ENTRADA, autor);
-        values.put(ColumnasEntrada.FECHA_ENTRADA, fecha);
-        values.put(ColumnasEntrada.CONTENIDO_ENTRADA, contenido);
-        //Insertando en la base de datos
-        database.insert(NOMBRE_TABLA_ENTRADAS, null, values);
-    }
-    */
-
-    /*
-    public void obtenerTodasLasEntradas(ArrayList <Entrada> listaEntradas, AdapterListaEntradas adapter) {
-        Cursor cursor = database.rawQuery("SELECT * FROM " + NOMBRE_TABLA_ENTRADAS, null);
-        listaEntradas.clear();
-        while(cursor.moveToNext()) {
-            // 1 = titulo; 2 = autor; 3 = fecha; 4 = contenido
-            Entrada entrada = new Entrada(cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getString(4));
-            listaEntradas.add(entrada);
-            adapter.notifyDataSetChanged();
-        }
-    }
-    */
-
-    /*
-    public void eliminarTodasLasEntradas() {
-        database.delete("entradas", null, null);
-    }
-    */
-
     public static class InsercionBDEntrada extends AsyncTask <Integer, Integer, String> {
 
         String titulo;
@@ -112,22 +77,25 @@ public class EntradasDataSource {
     public static class ConsultaBDEntrada extends AsyncTask <Integer, Integer, String> {
 
         ArrayList <Entrada> listaEntradas;
+        ArrayList <Entrada> listaEntradasAux;
         AdapterListaEntradas adapter;
 
-        public ConsultaBDEntrada(ArrayList <Entrada> listaEntradas, AdapterListaEntradas adapter) {
+        public ConsultaBDEntrada(ArrayList <Entrada> listaEntradas, AdapterListaEntradas adapter, ArrayList <Entrada> listaEntradasAux) {
             this.listaEntradas = listaEntradas;
             this.adapter = adapter;
+            this.listaEntradasAux = listaEntradasAux;
         }
 
         @Override
         protected String doInBackground(Integer... params) {
             Cursor cursor = database.rawQuery("SELECT * FROM " + NOMBRE_TABLA_ENTRADAS, null);
             listaEntradas.clear();
+            listaEntradasAux.clear();
             while(cursor.moveToNext()) {
                 // 1 = titulo; 2 = autor; 3 = fecha; 4 = contenido
                 Entrada entrada = new Entrada(cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getString(4));
                 listaEntradas.add(entrada);
-
+                listaEntradasAux.add(entrada);
             }
             return null;
         }

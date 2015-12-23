@@ -17,6 +17,7 @@
             android:text="@string/titulo_entrada"
             android:padding="@dimen/padding_headers"
             android:textSize="@dimen/text_size_titulo_entrada"
+            android:fontFamily="sans-serif-light"
             android:textColor="@color/gray_900"
             android:id="@+id/txtTituloEntrada" />
 
@@ -32,6 +33,7 @@
             android:text="@string/autor_entrada"
             android:textSize="@dimen/text_size_autor_entrada"
             android:textColor="@color/gray_800"
+            android:fontFamily="sans-serif-light"
             android:paddingTop="@dimen/padding_headers"
             android:paddingLeft="@dimen/padding_headers"
             android:id="@+id/txtAutorEntrada" />
@@ -43,6 +45,7 @@
             android:textSize="@dimen/text_size_fecha_entrada"
             android:layout_marginBottom="@dimen/margin_bottom_fecha_entrada"
             android:textColor="@color/gray_500"
+            android:fontFamily="sans-serif-light"
             android:paddingLeft="@dimen/padding_headers"
             android:id="@+id/txtFechaEntrada" />
 
@@ -51,6 +54,7 @@
             android:layout_height="wrap_content"
             android:text="@string/contenido_entrada"
             android:textSize="@dimen/text_size_contenido"
+            android:fontFamily="sans-serif-light"
             android:textColor="@color/gray_600"
             android:id="@+id/txtContenidoEntrada" />
 

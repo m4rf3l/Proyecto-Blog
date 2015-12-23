@@ -19,4 +19,8 @@
         <item name="colorControlHighlight">@color/green_500</item>
     </style>
 
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
 </resources>

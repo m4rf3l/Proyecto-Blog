@@ -1,24 +1,29 @@
+/*
+    MainActivity
+    Activity principal de la App; muestra el listado de todas las entradas
+    y vistas para las siguientes operaciones: Busqueda/Filtrado de entradas,
+    publicación de entradas y acceso a la información de cada entrada.
+ */
+
 package com.example.lap.appblog;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.JSONArray;
@@ -29,18 +34,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     protected ListView listViewEntradas;
     protected ArrayList <Entrada> listaEntradas;
+    // Botón para iniciar PublicarEntradaActivity
     protected FloatingActionButton btnFAB;
     protected Spinner spinnerFiltros;
     protected SearchView viewBusqueda;
     protected ProgressDialog dialogoCarga;
     protected AdapterListaEntradas adapter;
-    protected ProgressBar indicadorCarga;
     protected Conexion conexion;
     protected EntradasDataSource dataSource;
-    protected boolean conectado;
-    protected boolean buscando;
-    protected int filtroSeleccion;
     protected SwipeRefreshLayout swipeLayout;
+    // Bandera para el control de las operaciones cuando se está realizando una busqueda/filtrado
+    protected boolean buscando;
+    // Bandera para mostrar los dialogos de carga según haya recien creado la App o no.
+    protected boolean onCreate;
+    protected int filtroSeleccion;
+    static final int PETICION_PUBLICACION_ENTRADAS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +56,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
         listaEntradas = new ArrayList <Entrada> ();
-
         // Create the adapter to convert the array to views
         adapter = new AdapterListaEntradas(this, listaEntradas);
-
         listViewEntradas = (ListView) findViewById(R.id.listViewEntradas);
-
-        // Attach the adapter to a ListView
         listViewEntradas.setAdapter(adapter);
         listViewEntradas.setOnItemClickListener(this);
         listViewEntradas.setEmptyView(findViewById(R.id.txtListViewVacio));
@@ -62,40 +66,32 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btnFAB = (FloatingActionButton) findViewById(R.id.fab);
         btnFAB.setOnClickListener(this);
 
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.green_600));
+
         conexion = new Conexion(this);
-        indicadorCarga = (ProgressBar) findViewById(R.id.indicador_carga);
         dataSource = new EntradasDataSource(this);
 
         buscando = false;
+        onCreate = true;
         filtroSeleccion = 0;
 
-        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        swipeLayout.setOnRefreshListener(this);
-
-        EntradasDataSource.EliminarEntradasBD eliminarEntradas = new EntradasDataSource.EliminarEntradasBD();
-        eliminarEntradas.execute();
-        ObtencionEntradas obtencionEntradas = new ObtencionEntradas();
-        dialogoCarga = ProgressDialog.show(this,"" , getResources().getString(R.string.contenido_dialog_cargando_entradas), false);
-        obtencionEntradas.hacerPeticion();
+        obtenerEntradas();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        /*
+            Durante este estado de la App se verifica si el dispositivo
+            cuenta con conexión, según sea el caso se actualiza la disponibilidad del
+            botón para publicar nuevas entradas.
+            Si no tiene conexión se obtienen las entradas guardadas en la BD para el "Modo Desconectado"
+        */
         if (conexion.isOnline()) {
-            conectado = true;
             btnFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green_600)));
-            /*
-            EntradasDataSource.EliminarEntradasBD eliminarEntradas = new EntradasDataSource.EliminarEntradasBD();
-            if(! buscando) {
-                eliminarEntradas.execute();
-                ObtencionEntradas obtencionEntradas = new ObtencionEntradas();
-                dialogoCarga = ProgressDialog.show(this,"" , getResources().getString(R.string.contenido_dialog_cargando_entradas), false);
-                obtencionEntradas.hacerPeticion();
-            }
-            */
         } else {
-            conectado = false;
             btnFAB.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
             if(! buscando) {
                 EntradasDataSource.ConsultaBDEntrada consultaEntrada = new EntradasDataSource.ConsultaBDEntrada(listaEntradas, adapter, adapter.listaEntradasAux);
@@ -105,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
+    //Se ejecuta cuando se selecciona un Item del ListView
     public void onItemClick(AdapterView <?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ContenidoEntradaActivity.class);
         intent.putExtra("titulo", listaEntradas.get(position).getTitulo());
@@ -116,15 +113,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.fab && conectado) {
+        if(v.getId() == R.id.fab && conexion.isOnline()) {
+            btnFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green_600)));
             Intent intent = new Intent(this, PublicarEntradaActivity.class);
-            startActivity(intent);
+            // Iniciar PublicarEntradaActivity
+            startActivityForResult(intent, PETICION_PUBLICACION_ENTRADAS);
         } else {
+            btnFAB.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
             Toast.makeText(this, getResources().getString(R.string.aviso_problema_conexion_fab), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
+    //Se ejecuta cuando se cambia el item seleccionado en el Spinner de Filtrado de Busquedas
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         filtroSeleccion = position;
         onQueryTextChange(viewBusqueda.getQuery().toString());
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        // ArrayList para llenar el Spinner de Filtrado de Busquedas
         ArrayList <String> listaFiltros =  new ArrayList <String> ();
         listaFiltros.add(getResources().getString(R.string.filtro_item_spinner));
         listaFiltros.add(getResources().getString(R.string.titulo_item_spinner));
@@ -149,7 +151,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerFiltros = (Spinner) menu.findItem(R.id.spinnerFiltros).getActionView();
         spinnerFiltros.setOnItemSelectedListener(this);
         spinnerFiltros.setAdapter(adapter);
+        spinnerFiltros.setBackgroundResource(R.drawable.selector_item_spinner);
 
+        // View para las busquedas
         viewBusqueda = (SearchView) menu.findItem(R.id.viewBusqueda).getActionView();
         viewBusqueda.setQueryHint(getResources().getString(R.string.hint_view_busquedas));
         viewBusqueda.setOnQueryTextListener(this);
@@ -168,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
+    // Se ejecuta cuando se teclean caracteres en la caja de busqueda
     public boolean onQueryTextChange(String cadena) {
         if(cadena.length() == 0) {
             buscando = false;
@@ -184,22 +189,75 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
+    // Se ejecuta cuando se actualiza el listado con "SwipeRefreshLayout"
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                swipeLayout.setRefreshing(false);
-            }
-        }, 5000);
+       obtenerEntradas();
+    }
+
+    public void obtenerEntradas() {
+        if(onCreate) {
+            dialogoCarga = ProgressDialog.show(this, "", getResources().getString(R.string.contenido_dialog_cargando_entradas), false);
+            onCreate = false;
+        } else {
+            swipeLayout.setRefreshing(true);
+        }
         if (conexion.isOnline()) {
+            btnFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green_600)));
             EntradasDataSource.EliminarEntradasBD eliminarEntradas = new EntradasDataSource.EliminarEntradasBD();
             eliminarEntradas.execute();
             ObtencionEntradas obtencionEntradas = new ObtencionEntradas();
-            //dialogoCarga = ProgressDialog.show(this,"" , getResources().getString(R.string.contenido_dialog_cargando_entradas), false);
             obtencionEntradas.hacerPeticion();
+        } else {
+            btnFAB.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+            cerrarLoading();
+            Toast.makeText(this, getResources().getString(R.string.aviso_problema_conexion_swipe), Toast.LENGTH_SHORT).show();
         }
     }
 
-private class ObtencionEntradas implements OnPostExecute {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(dialogoCarga != null) {
+            if (dialogoCarga.isShowing()) {
+                dialogoCarga.cancel();
+            }
+        }
+    }
+
+    // Método para ocultar los dialogos de carga del listado de entradas.
+    public void cerrarLoading() {
+        if(dialogoCarga != null) {
+            if (dialogoCarga.isShowing()) {
+                dialogoCarga.dismiss();
+            }
+        }
+        swipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PETICION_PUBLICACION_ENTRADAS) {
+            if(resultCode == Activity.RESULT_OK) {
+                if(data != null) {
+                    // Se recibe una bandera de PublicarEntradaActivity, sí se publicaron nuevas entradas,
+                    // entonces se actualiza el contenido del ListView para mostrar las nuevas entradas.
+                    boolean publicacionRealizada = data.getBooleanExtra("publicacionRealizada", false);
+                    if(publicacionRealizada) {
+                        obtenerEntradas();
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+        ObtencionEntradas
+        Clase que hace la petición al consumo de servicios para obtener
+        las entradas almacenadas en el servidor,recibe el resultado
+        enviado y lo procesa de acuerdo al mismo.
+     */
+
+    private class ObtencionEntradas implements OnPostExecute {
 
         JSONArray respJSON;
         Peticiones peticion;
@@ -213,26 +271,30 @@ private class ObtencionEntradas implements OnPostExecute {
             if(respuesta != null) {
                 try {
                     respJSON = new JSONArray(respuesta);
+                    listaEntradas.clear();
+                    adapter.listaEntradasAux.clear();
                     if(respJSON.length() != 0) {
-                        listaEntradas.clear();
-                        adapter.listaEntradasAux.clear();
-                        for(int i=respJSON.length()-1; i >=0 ;i--) {
+                        for(int i=0; i < respJSON.length(); i++) {
                             JSONObject objEntrada = respJSON.getJSONObject(i);
-                            Entrada entrada = new Entrada(objEntrada.getString("id"), objEntrada.getString("titulo"), objEntrada.getString("autor"), objEntrada.getString("fecha"), objEntrada.getString("contenido"));
+                            Entrada entrada = new Entrada(objEntrada.getString("titulo"), objEntrada.getString("autor"), objEntrada.getString("fecha"), objEntrada.getString("contenido"));
+                            // Las entradas se almacenan en un ArrayList para el procesamiento del ListView
                             listaEntradas.add(entrada);
-                            adapter.listaEntradasAux.add(entrada);
-                            EntradasDataSource.InsercionBDEntrada  guardarEntrada = new EntradasDataSource.InsercionBDEntrada(entrada.getTitulo(), entrada.getAutor(), entrada.getFecha(), entrada.getContenido());
+                            // Las entradas se almacenan en una BD para el "Modo Desconectado"
+                            EntradasDataSource.InsercionBDEntrada guardarEntrada = new EntradasDataSource.InsercionBDEntrada(entrada.getTitulo(), entrada.getAutor(), entrada.getFecha(), entrada.getContenido());
                             guardarEntrada.execute();
-                            adapter.notifyDataSetChanged();
                         }
                     }
+                    // Se notifica al adapter para que actualice el ListView
+                    adapter.notifyDataSetChanged();
+                    // Las entradas se almacenan en un ArrayList Auxiliar para las Busquedas/Filtrado de entradas
+                    adapter.listaEntradasAux.addAll(listaEntradas);
                 }catch(Exception e) {
                     e.printStackTrace();
                     Toast.makeText(MainActivity.this, getResources().getString(R.string.aviso_error_cargar_entradas), Toast.LENGTH_SHORT).show();
                 }
-                dialogoCarga.dismiss();
+                cerrarLoading();
             } else {
-                dialogoCarga.dismiss();
+                cerrarLoading();
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.aviso_error_cargar_entradas), Toast.LENGTH_SHORT).show();
             }
         }

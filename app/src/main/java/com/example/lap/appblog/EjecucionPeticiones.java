@@ -1,3 +1,9 @@
+/*
+    EjecucionPeticiones
+    Clase (ejecutada en segundo plano) que ejecuta las peticiones mediante los métodos GET, PUT, POST, ETC.
+    y envía la respuesta obtenida a los activities mediante el método onTaskCompleted
+ */
+
 package com.example.lap.appblog;
 
 import android.content.Context;

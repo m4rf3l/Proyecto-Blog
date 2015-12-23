@@ -1,3 +1,8 @@
+/*
+    EntradasDataSource
+    Clase para ejecutar las operaciones sobre la BD y tablas.
+ */
+
 package com.example.lap.appblog;
 
 import android.content.ContentValues;
@@ -7,19 +12,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import java.util.ArrayList;
 
-/**
- * Created by Lap on 20/12/2015.
- */
 public class EntradasDataSource {
 
-    //Metainformación de la base de datos
+    // Metainformación de la base de datos
     public static final String NOMBRE_TABLA_ENTRADAS = "entradas";
     public static final String STRING_TYPE = "text";
     public static final String INT_TYPE = "integer";
     public static final String DATE_TYPE = "date";
 
-
-    //Campos de la tabla entradas
+    // Campos de la tabla entradas
     public static class ColumnasEntrada {
         public static final String ID_ENTRADA = "id";
         public static final String TITULO_ENTRADA = "titulo";
@@ -28,7 +29,7 @@ public class EntradasDataSource {
         public static final String CONTENIDO_ENTRADA = "contenido";
     }
 
-    //Script de creación de la tabla entradas
+    // Script de creación de la tabla entradas
     public static final String CREATE_ENTRADAS_SCRIPT =
             "create table "+NOMBRE_TABLA_ENTRADAS+"(" +
                     ColumnasEntrada.ID_ENTRADA+" "+INT_TYPE+" primary key autoincrement," +
@@ -41,11 +42,15 @@ public class EntradasDataSource {
     private static SQLiteDatabase database;
 
     public EntradasDataSource(Context context) {
-        //Creando una instancia hacia la base de datos
+        // Creando una instancia hacia la base de datos
         openHelper = new EntradasReaderDbHelper(context);
         database = openHelper.getWritableDatabase();
     }
 
+    /*
+        InsercionBDEntrada
+        Clase (Ejecutada en segundo plano) para insertar entradas sobre la BD.
+     */
     public static class InsercionBDEntrada extends AsyncTask <Integer, Integer, String> {
 
         String titulo;
@@ -62,18 +67,22 @@ public class EntradasDataSource {
 
         @Override
         protected String doInBackground(Integer... params) {
-            //Nuestro contenedor de valores
+            // Contenedor de valores
             ContentValues values = new ContentValues();
             values.put(ColumnasEntrada.TITULO_ENTRADA, titulo);
             values.put(ColumnasEntrada.AUTOR_ENTRADA, autor);
             values.put(ColumnasEntrada.FECHA_ENTRADA, fecha);
             values.put(ColumnasEntrada.CONTENIDO_ENTRADA, contenido);
-            //Insertando en la base de datos
+            // Insertando en la base de datos
             database.insert(NOMBRE_TABLA_ENTRADAS, null, values);
             return null;
         }
     }
 
+    /*
+        ConsultaBDEntrada
+        Clase (Ejecutada en segundo plano) para obtener entradas de la BD.
+   */
     public static class ConsultaBDEntrada extends AsyncTask <Integer, Integer, String> {
 
         ArrayList <Entrada> listaEntradas;
@@ -95,8 +104,9 @@ public class EntradasDataSource {
                 // 1 = titulo; 2 = autor; 3 = fecha; 4 = contenido
                 Entrada entrada = new Entrada(cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getString(4));
                 listaEntradas.add(entrada);
-                listaEntradasAux.add(entrada);
+
             }
+            listaEntradasAux.addAll(listaEntradas);
             return null;
         }
 
@@ -106,6 +116,10 @@ public class EntradasDataSource {
         }
     }
 
+    /*
+        EliminarEntradasBD
+        Clase (Ejecutada en segundo plano) para eliminar entradas en la BD.
+     */
     public static class EliminarEntradasBD extends AsyncTask <Integer, Integer, String> {
 
         public EliminarEntradasBD() {

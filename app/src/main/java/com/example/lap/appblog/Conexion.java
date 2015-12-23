@@ -1,3 +1,8 @@
+/*
+    Conexion
+    Clase para verificar el estado de la conexión del dispositivo.
+ */
+
 package com.example.lap.appblog;
 
 import android.content.Context;

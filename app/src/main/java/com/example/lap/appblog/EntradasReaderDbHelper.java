@@ -1,3 +1,8 @@
+/*
+    EntradasReaderDbHelper
+    Clase de apoyo para las operaciones sobre la base de datos.
+ */
+
 package com.example.lap.appblog;
 
 import android.content.Context;

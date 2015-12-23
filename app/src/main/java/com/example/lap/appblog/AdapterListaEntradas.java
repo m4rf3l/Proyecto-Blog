@@ -1,7 +1,12 @@
+/*
+    AdapterListaEntradas
+    Adapter para el ListView que muestra las entradas en el MainActivity.
+ */
+
 package com.example.lap.appblog;
 
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +17,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Lap on 17/12/2015.
- */
 public class AdapterListaEntradas extends ArrayAdapter <Entrada> {
 
     protected Context context;
     protected ArrayList <Entrada> listaEntradas;
-    protected ArrayList <Entrada> listaEntradasAux; // Para los filtros
+    protected ArrayList <Entrada> listaEntradasAux;
     static final int FILTRO_GENERAL = 0;
     static final int FILTRO_TITULO = 1;
     static final int FILTRO_CONTENIDO = 2;
@@ -30,6 +32,7 @@ public class AdapterListaEntradas extends ArrayAdapter <Entrada> {
         super(context, 0, new ArrayList<Entrada>());
         this.listaEntradas = listaEntradas;
         this.context = context;
+        // ArrayList auxiliar utilizado para las busquedas/filtrado de entradas
         listaEntradasAux = new ArrayList <Entrada> ();
     }
 
@@ -54,15 +57,14 @@ public class AdapterListaEntradas extends ArrayAdapter <Entrada> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // Get the data item for this position
         Entrada entrada = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
+
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.elemento_lista_entradas, parent, false);
         }
 
-        // Lookup view for data population
         TextView txtTitulo = (TextView) convertView.findViewById(R.id.txtTituloEntradaListado);
+        txtTitulo.setTypeface(txtTitulo.getTypeface(), Typeface.BOLD);
         TextView txtAutor= (TextView) convertView.findViewById(R.id.txtAutorEntradaListado);
         TextView txtFecha = (TextView) convertView.findViewById(R.id.txtFechaEntradaListado);
         TextView txtContenido = (TextView) convertView.findViewById(R.id.txtContenidoEntradaListado);
@@ -70,9 +72,9 @@ public class AdapterListaEntradas extends ArrayAdapter <Entrada> {
         txtTitulo.setText(entrada.getTitulo());
         txtAutor.setText(entrada.getAutor());
 
+        // Formatear la fecha para mostrarla en formato dd-MM-yyyy
         SimpleDateFormat fechaFormatoSQL = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat fechaFormatoApp = new SimpleDateFormat("dd-MM-yyyy");
-
         Date fecha = null;
         try {
             fecha = fechaFormatoSQL.parse(entrada.getFecha());
@@ -81,16 +83,20 @@ public class AdapterListaEntradas extends ArrayAdapter <Entrada> {
         }
         txtFecha.setText(fechaFormatoApp.format(fecha));
 
+        // Formatear el contenido a mostrar en el ListView si es mayor a 70 caracteres.
         if(entrada.getContenido().length() > 70) {
             txtContenido.setText(entrada.getContenido().substring(0, 71) + "...");
         } else {
             txtContenido.setText(entrada.getContenido());
         }
 
-        // Return the completed view to render on screen
         return convertView;
     }
 
+    /*
+        Método para el filtrado de las entradas, casos: busqueda general (busca en los campos título, autor y contenido),
+        busqueda por título, busqueda por autor y busqueda por contenido.
+    */
     public void filtroBusqueda(String cadena, int seleccionFiltro) {
         cadena = cadena.toLowerCase();
         listaEntradas.clear();

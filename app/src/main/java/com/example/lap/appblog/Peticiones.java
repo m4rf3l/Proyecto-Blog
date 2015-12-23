@@ -1,3 +1,9 @@
+/*
+    Peticiones
+    Clase que almacena las URLs para las peticiones
+    y llama a la ejecución de las peticiones de acuerdo al consumo.
+ */
+
 package com.example.lap.appblog;
 
 import android.content.Context;

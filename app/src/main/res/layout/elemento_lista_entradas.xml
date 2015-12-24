@@ -32,7 +32,6 @@
             android:layout_weight="0"
             android:text="@string/fecha_entrada_listado"
             android:gravity="right"
-            android:layout_gravity="center_vertical"
             android:textColor="@color/gray_500"
             android:fontFamily="sans-serif-light"
             android:textSize="@dimen/text_size_fecha_entrada_listado"

@@ -29,6 +29,8 @@
     <string name="fecha_entrada">Fecha</string>
     <string name="contenido_entrada">Contenido</string>
     <string name="aviso_error_mostrar_contenido">Error al mostrar el contenido de la entrada.</string>
+    <string name="entrada_por">Por:</string>
+    <string name="entrada_el">Publicada el</string>
 
     <!--String para la pantalla de publicacion de entrada -->
     <string name="titulo_action_bar_publicacion">Nueva entrada</string>
@@ -44,5 +46,8 @@
     <string name="aviso_error_publicar_entrada">Error al publicar entrada.</string>
     <string name="contenido_dialog_publicando_entrada">Publicando entrada, por favor espere...</string>
     <string name="aviso_contenido_titulo_excedido">El título de la entrada no debe ser mayor a 60 caracteres.</string>
+    <string name="confirmacion_publicacion_entrada">¿Está seguro de que quiere publicar la entrada?</string>
+    <string name="contenido_positive_button">PUBLICAR</string>
+    <string name="contenido_negative_button">CANCELAR</string>
 
 </resources>

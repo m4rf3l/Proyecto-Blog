@@ -45,7 +45,7 @@ public class ContenidoEntradaActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             txtTituloEntrada.setText(extras.getString("titulo"));
-            txtAutorEntrada.setText(extras.getString("autor"));
+            txtAutorEntrada.setText(getResources().getString(R.string.entrada_por)+" "+extras.getString("autor"));
             // Formatear la fecha para mostrarla en formato dd-MM-yyyy
             SimpleDateFormat fechaFormatoSQL = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat fechaFormatoApp = new SimpleDateFormat("dd-MM-yyyy");
@@ -55,7 +55,7 @@ public class ContenidoEntradaActivity extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            txtFechaEntrada.setText(fechaFormatoApp.format(fecha));
+            txtFechaEntrada.setText(getResources().getString(R.string.entrada_el)+" "+fechaFormatoApp.format(fecha));
             txtContenidoEntrada.setText(extras.getString("contenido"));
         } else {
             Toast.makeText(this, getResources().getString(R.string.aviso_error_mostrar_contenido), Toast.LENGTH_SHORT).show();

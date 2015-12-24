@@ -8,7 +8,7 @@
     <dimen name="text_size_titulo_entrada_listado">16dp</dimen>
     <dimen name="padding_linear_horizontal_elemento_listado">16dp</dimen>
     <dimen name="padding_linear_vertical_elemento_listado">8dp</dimen>
-    <dimen name="padding_item_spinner">10dp</dimen>
+    <dimen name="padding_item_spinner">5dp</dimen>
     <dimen name="padding_bottom_item_spinner">10dp</dimen>
     <dimen name="text_size_item_spinner">16dp</dimen>
     <dimen name="text_size_fecha_entrada_listado">12dp</dimen>

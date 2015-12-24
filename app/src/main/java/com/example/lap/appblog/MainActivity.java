@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerFiltros = (Spinner) menu.findItem(R.id.spinnerFiltros).getActionView();
         spinnerFiltros.setOnItemSelectedListener(this);
         spinnerFiltros.setAdapter(adapter);
-        spinnerFiltros.setBackgroundResource(R.drawable.selector_item_spinner);
+        spinnerFiltros.setBackgroundResource(R.drawable.selector_item_spinner);;
 
         // View para las busquedas
         viewBusqueda = (SearchView) menu.findItem(R.id.viewBusqueda).getActionView();

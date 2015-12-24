@@ -7,6 +7,6 @@
     <item
         android:id="@+id/btnPublicar"
         android:title="PUBLICAR"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
 
 </menu>

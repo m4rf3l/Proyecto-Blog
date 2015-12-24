@@ -7,4 +7,5 @@
     android:textColor="@color/white"
     android:background="@drawable/selector_item_spinner"
     android:textSize="@dimen/text_size_item_spinner"
+
     xmlns:android="http://schemas.android.com/apk/res/android" />

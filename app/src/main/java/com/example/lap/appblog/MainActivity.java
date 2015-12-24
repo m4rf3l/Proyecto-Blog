@@ -94,10 +94,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             btnFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green_600)));
         } else {
             btnFAB.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
-            if(! buscando) {
-                EntradasDataSource.ConsultaBDEntrada consultaEntrada = new EntradasDataSource.ConsultaBDEntrada(listaEntradas, adapter, adapter.listaEntradasAux);
-                consultaEntrada.execute();
-            }
         }
     }
 
@@ -204,12 +200,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         if (conexion.isOnline()) {
             btnFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green_600)));
-            EntradasDataSource.EliminarEntradasBD eliminarEntradas = new EntradasDataSource.EliminarEntradasBD();
-            eliminarEntradas.execute();
-            ObtencionEntradas obtencionEntradas = new ObtencionEntradas();
-            obtencionEntradas.hacerPeticion();
+            // Si se está realizando busqueda/filtrado de entradas, no actualizar la lista y conservar los resultados obtenidos
+            if(! buscando) {
+                EntradasDataSource.EliminarEntradasBD eliminarEntradas = new EntradasDataSource.EliminarEntradasBD();
+                eliminarEntradas.execute();
+                ObtencionEntradas obtencionEntradas = new ObtencionEntradas();
+                obtencionEntradas.hacerPeticion();
+            } else {
+                cerrarLoading();
+            }
         } else {
             btnFAB.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+            if(! buscando) {
+                EntradasDataSource.ConsultaBDEntrada consultaEntrada = new EntradasDataSource.ConsultaBDEntrada(listaEntradas, adapter, adapter.listaEntradasAux);
+                consultaEntrada.execute();
+            }
             cerrarLoading();
             Toast.makeText(this, getResources().getString(R.string.aviso_problema_conexion_swipe), Toast.LENGTH_SHORT).show();
         }

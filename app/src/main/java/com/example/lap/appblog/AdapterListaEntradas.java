@@ -85,7 +85,7 @@ public class AdapterListaEntradas extends ArrayAdapter <Entrada> {
 
         // Formatear el contenido a mostrar en el ListView si es mayor a 70 caracteres.
         if(entrada.getContenido().length() > 70) {
-            txtContenido.setText(entrada.getContenido().substring(0, 71) + "...");
+            txtContenido.setText(entrada.getContenido().substring(0, 70) + "...");
         } else {
             txtContenido.setText(entrada.getContenido());
         }

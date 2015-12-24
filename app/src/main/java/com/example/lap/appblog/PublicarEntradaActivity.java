@@ -7,14 +7,24 @@
 package com.example.lap.appblog;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +58,7 @@ public class PublicarEntradaActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_publicar_entrada, menu);
+
         return true;
     }
 
@@ -64,20 +75,43 @@ public class PublicarEntradaActivity extends AppCompatActivity {
                 break;
             case R.id.btnPublicar:
                 if(validarCajas()) {
-                    String titulo = edtTitulo.getText().toString();
-                    String autor = edtAutor.getText().toString();
-                    String contenido = edtContenido.getText().toString();
-                    Calendar calendario = Calendar.getInstance();
-                    SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd"); // Formato de fecha MySQL
-                    String fecha = fechaFormato.format(calendario.getTime());
-                    Entrada entrada = new Entrada(titulo, autor, fecha, contenido);
-                    PublicacionEntrada publicacion = new PublicacionEntrada(entrada);
-                    dialogoCarga = ProgressDialog.show(this, "", getResources().getString(R.string.contenido_dialog_publicando_entrada), false);
-                    publicacion.hacerPeticion();
+                    // Dialogo de confirmación al publicar la entrada
+                    AlertDialog.Builder dialogConfirmacion = new AlertDialog.Builder(this);
+                    dialogConfirmacion.setMessage(getResources().getString(R.string.confirmacion_publicacion_entrada));
+                    dialogConfirmacion.setNegativeButton(getResources().getString(R.string.contenido_negative_button), new DialogInterface.OnClickListener() {
+                        // Si el usuario selecciona cancelar
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    dialogConfirmacion.setPositiveButton(getResources().getString(R.string.contenido_positive_button), new DialogInterface.OnClickListener() {
+                        // Si el usuario selecciona publicar
+                        public void onClick(DialogInterface dialog, int which) {
+                            String titulo = edtTitulo.getText().toString();
+                            String autor = edtAutor.getText().toString();
+                            String contenido = edtContenido.getText().toString();
+                            Calendar calendario = Calendar.getInstance();
+                            // Formato de fecha MySQL
+                            SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy-MM-dd");
+                            String fecha = fechaFormato.format(calendario.getTime());
+                            Entrada entrada = new Entrada(titulo, autor, fecha, contenido);
+                            // Llamar al consumo de servicios
+                            PublicacionEntrada publicacion = new PublicacionEntrada(entrada);
+                            dialogoCarga = ProgressDialog.show(PublicarEntradaActivity.this, "", getResources().getString(R.string.contenido_dialog_publicando_entrada), false);
+                            publicacion.hacerPeticion();
+                        }
+                    });
+                    AlertDialog alertDialog = dialogConfirmacion.create();
+                    alertDialog.show();
+                    // Cambiar color botones del dialog
+                    Button botonPositivo = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                    Button botonNegativo = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                    botonPositivo.setTextColor(ContextCompat.getColor(this, R.color.green_600));
+                    botonNegativo.setTextColor(ContextCompat.getColor(this, R.color.green_600));
                 }
+                ocultarTeclado();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -119,6 +153,15 @@ public class PublicarEntradaActivity extends AppCompatActivity {
         edtTitulo.setText("");
         edtAutor.setText("");
         edtContenido.setText("");
+        edtTitulo.requestFocus();
+    }
+
+    public void ocultarTeclado() {
+        View view = PublicarEntradaActivity.this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     /*

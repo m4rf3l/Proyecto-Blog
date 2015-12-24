@@ -15,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/titulo_entrada"
-            android:padding="@dimen/padding_headers"
+            android:paddingTop="@dimen/padding_headers"
+            android:paddingBottom="@dimen/padding_headers"
             android:textSize="@dimen/text_size_titulo_entrada"
             android:fontFamily="sans-serif-light"
             android:textColor="@color/gray_900"
@@ -30,24 +31,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/autor_entrada"
-            android:textSize="@dimen/text_size_autor_entrada"
-            android:textColor="@color/gray_800"
-            android:fontFamily="sans-serif-light"
+            android:text="@string/fecha_entrada"
+            android:textSize="@dimen/text_size_fecha_entrada"
             android:paddingTop="@dimen/padding_headers"
-            android:paddingLeft="@dimen/padding_headers"
-            android:id="@+id/txtAutorEntrada" />
+            android:textColor="@color/gray_600"
+            android:fontFamily="sans-serif-light"
+            android:id="@+id/txtFechaEntrada" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fecha_entrada"
-            android:textSize="@dimen/text_size_fecha_entrada"
-            android:layout_marginBottom="@dimen/margin_bottom_fecha_entrada"
-            android:textColor="@color/gray_500"
+            android:text="@string/autor_entrada"
+            android:textSize="@dimen/text_size_autor_entrada"
+            android:textColor="@color/gray_600"
             android:fontFamily="sans-serif-light"
-            android:paddingLeft="@dimen/padding_headers"
-            android:id="@+id/txtFechaEntrada" />
+            android:layout_marginBottom="@dimen/margin_bottom_fecha_entrada"
+            android:id="@+id/txtAutorEntrada" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,7 +54,7 @@
             android:text="@string/contenido_entrada"
             android:textSize="@dimen/text_size_contenido"
             android:fontFamily="sans-serif-light"
-            android:textColor="@color/gray_600"
+            android:textColor="@color/gray_800"
             android:id="@+id/txtContenidoEntrada" />
 
     </LinearLayout>
